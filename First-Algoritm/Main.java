@@ -12,10 +12,7 @@ public class Main {
                 String line = sc.nextLine();
                 String result = ""; //get the results per day
                 for(int i = 0; i+4 <= line.length(); i+=4) {
-                    String sub = line.substring(i, i+4); //take 4 chars per loop
-                    int decimal = Integer.parseInt(sub.replaceAll("\\s+", ""),2); //convert from binary to decimal
-                    String hex = Integer.toHexString(decimal).toUpperCase(); //convert from decimal to hexadecimal
-                    result += hex;
+                    result += Integer.toHexString(Integer.parseInt(line.substring(i, i+4).replaceAll("\\s+", ""),2)).toUpperCase();
                 }
                 day[counter] = result; //add the result in it specific day
                 counter++;
