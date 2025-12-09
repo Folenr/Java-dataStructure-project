@@ -38,38 +38,46 @@ public class ArrayAlgoritihm {
         Scanner scan = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
-        String day = scan.nextLine();
+        String day = scan.nextLine(); //user enter the day
+
         LocalDate Date = LocalDate.parse(day, formatter);
         int currentDay = (int)Date.toEpochDay();
-        int index = currentDay-firstDay;
-        System.out.println(days[index]); //subtract the first day from the current day to get the index
-        //don't touch the code above, it just works
-        int startMin,endMin; //integers for start min and end min, will be used for display (print)
+        int index = currentDay-firstDay; //turn the day into integer
+
+        int startMin,endMin;
+        System.out.print("Enter the start minutes:  ");
         startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minutes:  ");
         endMin = scan.nextInt() - 1;
-        String hexaNum = "";
+
+        String hexaNum = ""; //the hexadecimal number we want to print
         for(int i=startMin/4;i<=endMin/4;i++)
             hexaNum += days[index].charAt(i);
-        char currentHexa = hexaNum.charAt(0);
-        String deciamel;
-        deciamel = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
-        if(endMin/4 != startMin/4)
+
+        char currentHexa = hexaNum.charAt(0); //the current hexadecimal number, it will turn into binary
+        String binary;
+        binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
+        //this is 3 parts
+        //1 print the first hexadecimal number (only print the needed part)
+        //2 print the numbers in between
+        //3 print the last hexadecimal number (only print the needed part)
+        if(endMin/4 != startMin/4) //check if we have more than 1 hexadecimal number
             for(int i=startMin%4;i<4;i++)
-                System.out.print(deciamel.charAt(i));
-        else{
+                System.out.print(binary.charAt(i));
+        else{ //if we have 1 hexadecimal number it will print it and stop
             for(int i=startMin%4;i<=endMin%4;i++)
-                System.out.print(deciamel.charAt(i));
+                System.out.print(binary.charAt(i));
             return;
         }
         for(int i=1;i<hexaNum.length()-1;i++){
             currentHexa = hexaNum.charAt(i);
-            deciamel = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
+            binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
             for(int j=0;j<4;j++)
-                System.out.print(deciamel.charAt(j));
+                System.out.print(binary.charAt(j));
         }
         currentHexa = hexaNum.charAt(hexaNum.length()-1);
-        deciamel = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
+        binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
         for(int i=0;i<=endMin%4;i++)
-            System.out.print(deciamel.charAt(i));
+            System.out.print(binary.charAt(i));
     }
 }
