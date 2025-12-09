@@ -10,9 +10,10 @@ public class ArrayAlgoritihm {
             int counter = 0;
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();
+                line.replaceAll("\\s+", "");
                 String result = ""; //get the results per day
                 for(int i = 0; i+4 <= line.length(); i+=4) {
-                    result += Integer.toHexString(Integer.parseInt(line.substring(i, i+4).replaceAll("\\s+", ""),2)).toUpperCase();
+                    result += Integer.toHexString(Integer.parseInt(line.substring(i, i+4),2)).toUpperCase();
                 }
                 day[counter] = result; //add the result in it specific day
                 counter++;

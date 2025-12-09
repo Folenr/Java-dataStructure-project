@@ -9,6 +9,7 @@ public class LinkedListArrayALgoritihm {
             Scanner sc = new Scanner(fis);
             while (sc.hasNextLine()){ //loop from first line to last line in file
                 String line = sc.nextLine();
+                line.replaceAll("\\s+", "");
                 LinkedList<Integer> temp = new LinkedList<>(); //temp linked list to put the index of ones
                 for(int i = 0; i<line.length(); i++) //loop in the line from first char to last char
                     if(line.charAt(i) == '1') //make sure its one
