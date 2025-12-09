@@ -27,14 +27,14 @@ public class ArrayAlgoritihm {
                 days[counter] = result; //add the result in it specific day
                 counter++;
             }
-            diplay(days,firstDay);
+            display(days,firstDay);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
     //اذا شغال تصلحش
-    public static void diplay(String[] days,int firstDay){
+    public static void display(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
