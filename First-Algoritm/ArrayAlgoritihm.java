@@ -8,9 +8,10 @@ public class ArrayAlgoritihm {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
             int counter = 0;
+            String line = sc.nextLine(); //first line for the date
             while(sc.hasNextLine()) {
-                String line = sc.nextLine();
-                line.replaceAll("\\s+", "");
+                line = sc.nextLine();
+                line = line.replaceAll("\\s+", ""); //delete all spaces
                 String result = ""; //get the results per day
                 for(int i = 0; i+4 <= line.length(); i+=4) {
                     result += Integer.toHexString(Integer.parseInt(line.substring(i, i+4),2)).toUpperCase();
