@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class ArrayAlgoritihm {
     public static void main(String[] args) {
         String[] day = new String[10]; //initial an array with size 10 days
         try {

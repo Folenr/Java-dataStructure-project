@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class LinkedListArrayALgoritihm {
     public static void main(String[] args) {
         LinkedList<LinkedList<Integer>> arr = new LinkedList<>(); //nested linked list
         try {
