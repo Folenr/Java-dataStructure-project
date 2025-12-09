@@ -59,7 +59,8 @@ public class ArrayAlgoritihm {
         else{
             for(int i=startMin%4;i<=endMin%4;i++)
                 System.out.print(deciamel.charAt(i));
-        }//add return in the function
+            return;
+        }
         for(int i=1;i<hexaNum.length()-1;i++){
             currentHexa = hexaNum.charAt(i);
             deciamel = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
