@@ -28,6 +28,7 @@ public class LinkedListArrayALgoritihm {
                 index++;
             }
             display(arr,firstDay);
+            edit(arr,firstDay);
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
@@ -65,4 +66,55 @@ public class LinkedListArrayALgoritihm {
                 System.out.print(0);
         }
     }
-}
+    
+    public static void edit(LinkedList<Integer>[] arr,int firstDay){
+            Scanner scan = new Scanner(System.in);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+
+            System.out.print("Enter the date (DD MM YYYY): ");
+            String day = scan.nextLine();
+
+            System.out.print("Enter start minute: ");
+            int startMin = scan.nextInt();//get the start min index
+
+            System.out.print("Enter end minute: ");
+            int endMin = scan.nextInt();//get the end min index12
+
+            System.out.print("Enter newValues (0/1 string): ");
+            String newValues = scan.nextLine();//get the new values
+
+            if (newValues.length() != (endMin - startMin + 1)) {//error if the user enter invaild input length
+                System.out.println("ERROR: newValues length does not match the range.");
+                return;
+            }
+
+            LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
+            int currentDay = (int)Date.toEpochDay();//convert from date to integer
+            int index = currentDay-firstDay; //get the index of the day in days array
+
+            LinkedList<Integer> list = arr[index];
+
+            for (int i = 0; i < list.size(); i++) {
+                int minute = list.get(i);//get the minute in day[index]
+
+                if (minute >= startMin && minute <= endMin) {//remove the old values
+                    list.remove(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < newValues.length(); i++) {//add new values into a list
+                if (newValues.charAt(i) == '1') {
+                    list.add(startMin + i);
+                }
+            }
+
+
+            Collections.sort(list);//sort the list if not that break the algorithm
+
+            System.out.println("edit complete!");//print the edit is complete to the user know the edit is done
+        }
+
+
+    }
+            
