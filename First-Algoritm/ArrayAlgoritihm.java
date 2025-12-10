@@ -11,7 +11,6 @@ public class ArrayAlgoritihm {
         try {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
-            Scanner scan = new Scanner(System.in); //scanner for user input
             int counter = 0;
             String line = sc.nextLine(); //first line for the date
             LocalDate Date = LocalDate.parse(line, formatter); //a temp date to turn the String into date
@@ -27,6 +26,7 @@ public class ArrayAlgoritihm {
                 days[counter] = result; //add the result in it specific day
                 counter++;
             }
+            delete(days,firstDay);
             display(days,firstDay);
 
         }catch (FileNotFoundException e) {
@@ -36,48 +36,91 @@ public class ArrayAlgoritihm {
     //اذا شغال تصلحش
     public static void display(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        int index = getIndex(days,firstDay);
+
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;//get the start min index
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;//get the end min index
+
+        String binaryNum = "";
+        for (int i=0; i<days[index].length(); i++) {//convert all hexadecimal char to binary and add all of them to binaryNum
+            binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 16).toString(2)));
+        }
+        //take a substring and print it
+        System.out.println(binaryNum.substring(startMin, endMin + 1));
+    }
+
+    public static void edit(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);
+        int index = getIndex(days,firstDay);
+
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+        int[] values = new int[endMin-startMin + 1];
+        System.out.print("Enter the values: ");
+        String valString = "";
+        for(int i=0; i<values.length; i++) {
+            values[i] = scan.nextInt();
+            valString += Integer.toString(values[i]);
+        }
+
+
+        String binaryNum = "";
+        for (int i=0; i<days[index].length(); i++) {//convert all hexadecimal char to binary and add all of them to binaryNum
+            binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 16).toString(2)));
+        }
+        //add the value to the zeros and ones
+        String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
+
+        //convert it to hexadecimal
+        String result = "";
+        for(int i=0; i+4<=edited.length(); i+=4) {
+            result += Integer.toHexString(Integer.parseInt(edited.substring(i, i+4),2)).toUpperCase();
+        }
+        //add the edited result to the array
+        days[index] = result;
+    }
+    public static void delete(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);
+        int index = getIndex(days,firstDay);
+
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;//get the start min index
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt();//get the end min index
+
+        String binaryNum = "";
+        for (int i=0; i<days[index].length(); i++) {//convert all hexadecimal char to binary and add all of them to binaryNum
+            binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 16).toString(2)));
+        }
+        StringBuilder binaryNumB = new StringBuilder(binaryNum);//this object make me able to delete a part of the string
+        binaryNumB.delete(startMin,endMin);
+        binaryNum = binaryNumB.toString();
+
+        String result = "";
+        for(int i=0; i+4<=binaryNum.length(); i+=4) {
+            result += Integer.toHexString(Integer.parseInt(binaryNum.substring(i, i+4),2)).toUpperCase();
+        }
+        //add the edited result to the array
+        days[index] = result;
+
+    }
+
+    private static int getIndex(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);//scanner for the user input
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
         String day = scan.nextLine(); //user enter the day
 
-        LocalDate Date = LocalDate.parse(day, formatter);
-        int currentDay = (int)Date.toEpochDay();
-        int index = currentDay-firstDay; //turn the day into integer
-
-        int startMin,endMin;
-        System.out.print("Enter the start minutes:  ");
-        startMin = scan.nextInt() - 1;
-        System.out.print("Enter the end minutes:  ");
-        endMin = scan.nextInt() - 1;
-
-        String hexaNum = ""; //the hexadecimal number we want to print
-        for(int i=startMin/4;i<=endMin/4;i++)
-            hexaNum += days[index].charAt(i);
-
-        char currentHexa = hexaNum.charAt(0); //the current hexadecimal number, it will turn into binary
-        String binary;
-        binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
-        //this is 3 parts
-        //1 print the first hexadecimal number (only print the needed part)
-        //2 print the numbers in between
-        //3 print the last hexadecimal number (only print the needed part)
-        if(endMin/4 != startMin/4) //check if we have more than 1 hexadecimal number
-            for(int i=startMin%4;i<4;i++)
-                System.out.print(binary.charAt(i));
-        else{ //if we have 1 hexadecimal number it will print it and stop
-            for(int i=startMin%4;i<=endMin%4;i++)
-                System.out.print(binary.charAt(i));
-            return;
-        }
-        for(int i=1;i<hexaNum.length()-1;i++){
-            currentHexa = hexaNum.charAt(i);
-            binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
-            for(int j=0;j<4;j++)
-                System.out.print(binary.charAt(j));
-        }
-        currentHexa = hexaNum.charAt(hexaNum.length()-1);
-        binary = String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(currentHexa), 16).toString(2)));
-        for(int i=0;i<=endMin%4;i++)
-            System.out.print(binary.charAt(i));
+        LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
+        int currentDay = (int)Date.toEpochDay();//convert from date to integer
+        int index = currentDay-firstDay; //get the index of the day in days array
+        return index;
     }
 }
