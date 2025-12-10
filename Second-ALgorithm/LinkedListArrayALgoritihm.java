@@ -15,11 +15,10 @@ public class Main {
             int conunter=0;
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
-            String line= sc.nextLine();
-            LocalDate Date = LocalDate.parse(line, formatter); // turn the String into date
-            int FirstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
+//            LocalDate Date = LocalDate.parse(line, formatter); // turn the String into date
+//            int FirstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
             while (sc.hasNextLine()) { //loop from first line to last line in file
-                line = sc.nextLine();
+                String line = sc.nextLine();
                 line = line.replaceAll("\\s+", "");
 
                     for (int i = 0; i <line.length(); i++){ //loop in the line from first char to last char
