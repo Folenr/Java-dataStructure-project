@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
@@ -10,7 +11,6 @@ public class ArrayAlgoritihm {
         try {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
-            Scanner scan = new Scanner(System.in); //scanner for user input
             int counter = 0;
             String line = sc.nextLine(); //first line for the date
             LocalDate Date = LocalDate.parse(line, formatter); //a temp date to turn the String into date
@@ -26,15 +26,36 @@ public class ArrayAlgoritihm {
                 days[counter] = result; //add the result in it specific day
                 counter++;
             }
-            System.out.println("Enter the day date to display exp : 19 10 2024");
-            String day = scan.nextLine();
-            Date = LocalDate.parse(day, formatter);
-            int currentDay = (int)Date.toEpochDay();
-            //don't touch this it just works
-            System.out.println(days[currentDay-firstDay]); //subtract the first day from the current day to get the index
+            display(days,firstDay);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
+        }
+    }
+    //اذا شغال تصلحش
+    public static void display(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);//scanner for the user input
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
+        System.out.print("Enter the Date of format (DD MM YYYY):  ");
+        String day = scan.nextLine(); //user enter the day
+
+        LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
+        int currentDay = (int)Date.toEpochDay();//convert from date to integer
+        int index = currentDay-firstDay; //get the index of the day in days array
+
+        int startMin,endMin;
+        System.out.print("Enter the start minutes:  ");
+        startMin = scan.nextInt() - 1;//get the start min index
+        System.out.print("Enter the end minutes:  ");
+        endMin = scan.nextInt() - 1;//get the end min index
+
+        String binaryNum = "";
+        //convert every Hexadecimal char to 4 binary chars and add these 4 chars as string to binaryNum
+        for(int i=startMin/4;i<=endMin/4;i++) {
+            binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 16).toString(2)));
+        }
+        for(int j=startMin;j<=endMin;j++) {//print them
+            System.out.print(binaryNum.charAt(j));
         }
     }
 }
