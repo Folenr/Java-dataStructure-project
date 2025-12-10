@@ -109,7 +109,6 @@ public class ArrayAlgoritihm {
         }
         //add the edited result to the array
         days[index] = result;
-
     }
 
     private static int getIndex(String[] days,int firstDay){
