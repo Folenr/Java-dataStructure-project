@@ -45,17 +45,16 @@ public class ArrayAlgoritihm {
 
         int startMin,endMin;
         System.out.print("Enter the start minutes:  ");
-        startMin = scan.nextInt() - 1;//get the start min
+        startMin = scan.nextInt() - 1;//get the start min index
         System.out.print("Enter the end minutes:  ");
-        endMin = scan.nextInt() - 1;//get the end min
+        endMin = scan.nextInt() - 1;//get the end min index
 
         String binaryNum = "";
         //convert every Hexadecimal char to 4 binary chars and add these 4 chars as string to binaryNum
         for(int i=startMin/4;i<=endMin/4;i++) {
             binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 16).toString(2)));
         }
-        int result = (endMin - startMin+1)-1;//get just the length of zeros and ones needed
-        for(int j=0;j<result;j++) {//print them
+        for(int j=startMin;j<=endMin;j++) {//print them
             System.out.print(binaryNum.charAt(j));
         }
     }
