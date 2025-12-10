@@ -28,7 +28,6 @@ public class LinkedListArrayALgoritihm {
                 index++;
             }
             display(arr,firstDay);
-
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
