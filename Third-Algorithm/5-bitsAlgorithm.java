@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 public class Main {
     public static void main(String[] args) {
+        java.util.Locale.setDefault(java.util.Locale.US);
         String[] days = new String[10]; //initial an array with size 10 days
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
@@ -20,9 +21,7 @@ public class Main {
                 days[counter] = to5Bits(line); //add the result in it specific day
                 counter++;
             }
-            search(days, firstDay);
-            delete(days, firstDay);
-            search(days, firstDay);
+            displayZerosOnes(days);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -82,6 +81,34 @@ public class Main {
         String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
         days[index] = to5Bits(edited);
     }
+
+    public static void displayDays(String[] days){
+        System.out.println("The number of days is :  " + days.length);
+    }
+
+    public static void displayMin(String[] days){
+        int counter = 0;
+        for(int i=0; i<days.length; i++)
+            counter += toBinary(days,i).length();
+        System.out.println(counter);
+    }
+
+    public static void displayZerosOnes(String[] days) {
+        int zeros = 0;
+        int ones = 0;
+        for (int i = 0; i < days.length; i++) {
+            String binary = toBinary(days, i);
+            for (int j = 0; j < binary.length(); j++)
+                if (binary.charAt(j) == '0')
+                    zeros++;
+                else
+                    ones++;
+        }
+
+        System.out.println("The total number of ones is:  " + ones);
+        System.out.println("The total number of zeros is:  " + zeros);
+    }
+
 
     private static int getIndex(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);//scanner for the user input
