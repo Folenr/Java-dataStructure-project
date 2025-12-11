@@ -90,18 +90,24 @@ public class ArrayAlgoritihm {
             min += toBinary(this.days[i]).length();
         System.out.println("The total number of minutes is :  " + min);
     }
-    public void displayZerosOnes(){
+    public void displayZeros(){
         int zeros = 0;
+        for (String day : this.days)
+            for (int j = 0; j < toBinary(day).length(); j++)
+                if (toBinary(day).charAt(j) == '0')
+                    zeros++;
+
+        System.out.println("The total number of zeros is :  " + zeros);
+    }
+
+    public void displayOnes(){
         int ones = 0;
         for (String day : this.days)
             for (int j = 0; j < toBinary(day).length(); j++)
                 if (toBinary(day).charAt(j) == '1')
                     ones++;
-                else
-                    zeros++;
 
         System.out.println("The total number of ones is :  " + ones);
-        System.out.println("The total number of zeros is :  " + zeros);
     }
 
 
