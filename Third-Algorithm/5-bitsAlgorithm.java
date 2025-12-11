@@ -83,20 +83,28 @@ public class FiveBitsAlgorithm {
         System.out.println("The total number of minutes is : " + counter);
     }
 
-    public void displayZerosOnes() {
+    public void displayZeros() {
         int zeros = 0;
-        int ones = 0;
         for (int i = 0; i < this.days.length; i++) {
             String binary = toBinary(i);
             for (int j = 0; j < binary.length(); j++)
                 if (binary.charAt(j) == '0')
                     zeros++;
-                else
+        }
+
+        System.out.println("The total number of zeros is: " + zeros);
+    }
+
+    public void displayOnes(){
+        int ones = 0;
+        for (int i = 0; i < this.days.length; i++) {
+            String binary = toBinary(i);
+            for (int j = 0; j < binary.length(); j++)
+                if (binary.charAt(j) == '1')
                     ones++;
         }
 
         System.out.println("The total number of ones is: " + ones);
-        System.out.println("The total number of zeros is: " + zeros);
     }
 
 
