@@ -11,6 +11,8 @@ public class LinkedListArrayALgoritihm {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
+            int counterMin=0;
+            int counterones=0;
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
             String line=sc.nextLine();
@@ -21,21 +23,24 @@ public class LinkedListArrayALgoritihm {
                 line = sc.nextLine();
                 line = line.replaceAll("\\s+", "");
                 for (int i = 0; i <line.length(); i++){ //loop in the line from first char to last char
+                    counterMin++;
                     if (line.charAt(i) == '1') {//make sure its one
                         arr[index].add(i + 1);
+                        counterones++;
                     }
                 }
                 index++;
             }
-            display(arr,firstDay);
+            search(arr,firstDay);
             edit(arr,firstDay);
             delete(arr,firstDay);
+            display(counterones,counterMin);
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
 
-    public static void display( LinkedList<Integer>[] arr,int firstDay){
+    public static void search(LinkedList<Integer>[] arr, int firstDay){
         Scanner scan = new Scanner(System.in);//scanner for the user input
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
@@ -66,6 +71,7 @@ public class LinkedListArrayALgoritihm {
             }else
                 System.out.print(0);
         }
+        System.out.println();
     }
 
     public static void edit(LinkedList<Integer>[] arr,int firstDay){
@@ -80,6 +86,7 @@ public class LinkedListArrayALgoritihm {
 
             System.out.print("Enter end minute: ");
             int endMin = scan.nextInt();//get the end min index12
+            scan.nextLine();
 
             System.out.print("Enter newValues (0/1 string): ");
             String newValues = scan.nextLine();//get the new values
@@ -92,24 +99,14 @@ public class LinkedListArrayALgoritihm {
             LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
             int currentDay = (int)Date.toEpochDay();//convert from date to integer
             int index = currentDay-firstDay; //get the index of the day in days array
-
             LinkedList<Integer> list = arr[index];
-
-            for (int i = 0; i < list.size(); i++) {
-                int minute = list.get(i);//get the minute in day[index]
-
-                if (minute >= startMin && minute <= endMin) {//remove the old values
-                    list.remove(i);
-                    i--;
-                }
-            }
+            getindex_remove(list,startMin,endMin);
 
             for (int i = 0; i < newValues.length(); i++) {//add new values into a list
                 if (newValues.charAt(i) == '1') {
                     list.add(startMin + i);
                 }
             }
-
 
             Collections.sort(list);//sort the list if not that break the algorithm
 
@@ -127,14 +124,28 @@ public class LinkedListArrayALgoritihm {
             int startMin = scan.nextInt();//get the start min index
 
             System.out.print("Enter end minute: ");
-            int endMin = scan.nextInt();//get the end min index12
-
+            int endMin = scan.nextInt();//get the end min index
 
             LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
             int currentDay = (int)Date.toEpochDay();//convert from date to integer
             int index = currentDay-firstDay; //get the index of the day in days array
-
             LinkedList<Integer> list = arr[index];
+            getindex_remove(list,startMin,endMin);
+            Collections.sort(list);//sort the list if not that break the algorithm
+            System.out.println("delete complete!");//print the delete is complete to the user know the edit is done
+        }
+
+
+        public static void display(int counterMin,int counterones){
+            int counterzeros= counterMin - counterones;
+            System.out.println("number of minutes : " + counterMin);
+            System.out.println("number of ones : " + counterones);
+            System.out.println("number of zeros : " + counterzeros);
+        }
+
+
+        private static void getindex_remove(LinkedList<Integer> list,int startMin,int endMin){
+            // get minutes and remove the old values
 
             for (int i = 0; i < list.size(); i++) {
                 int minute = list.get(i);//get the minute in day[index]
@@ -145,9 +156,6 @@ public class LinkedListArrayALgoritihm {
                 }
             }
 
-            Collections.sort(list);//sort the list if not that break the algorithm
-
-            System.out.println("delete complete!");//print the delete is complete to the user know the edit is done
         }
 
     }
