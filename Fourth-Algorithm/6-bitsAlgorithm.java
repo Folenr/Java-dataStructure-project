@@ -16,17 +16,11 @@ public class Main {
             int counter = 0;
             while (sc.hasNextLine()) {
                 line = sc.nextLine().replaceAll("\\s+", ""); //get the lines from first to last in file
-                String result = ""; //get the results per day
-                for (int i = 0; i + 6 <= line.length(); i += 6) { //take just 6 char from the line till the line ends
-                    int num = Integer.parseInt(line.substring(i, i + 6), 2); //convert from binary to decimal
-                    if (num <= 35)//add to result char by convert decimal to 0..9 A B C ... Z which is 36 chars
-                        result += Integer.toString(num, 36).toUpperCase();
-                    else//if it was more than 35 then store a...z this is 62 we need 2 more which is '{' and '|' now it 64
-                        result += (char) ('a' + (num - 36));
-                }
-                days[counter] = result; //add the result in it specific day
+                days[counter] = to6Bits(line); //add the result in it specific day
                 counter++;
             }
+            search(days, firstDay);
+            edit(days, firstDay);
             search(days, firstDay);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -45,6 +39,28 @@ public class Main {
         String binaryNum = toBinary(days,index);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
+    }
+
+    public static void edit(String[] days, int firstDay) {
+        Scanner scan = new Scanner(System.in);
+        int index = getIndex(days, firstDay);
+
+        int startMin, endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+        int[] values = new int[endMin-startMin + 1];
+        System.out.print("Enter the values: ");
+        String valString = "";
+        for(int i=0; i<values.length; i++) {
+            values[i] = scan.nextInt();
+            valString += Integer.toString(values[i]);
+        }
+
+        String binaryNum = toBinary(days,index);
+        String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
+        days[index] = to6Bits(edited);
     }
 
     private static int getIndex(String[] days, int firstDay) {
@@ -80,5 +96,17 @@ public class Main {
             binaryNum += String.format("%6s", binary).replace(" ", "0");
         }
         return binaryNum;
+    }
+
+    private static String to6Bits(String edited){
+        String result = ""; //get the results per day
+        for (int i = 0; i + 6 <= edited.length(); i += 6) { //take just 6 char from the line till the line ends
+            int num = Integer.parseInt(edited.substring(i, i + 6), 2); //convert from binary to decimal
+            if (num <= 35)//add to result char by convert decimal to 0..9 A B C ... Z which is 36 chars
+                result += Integer.toString(num, 36).toUpperCase();
+            else//if it was more than 35 then store a...z this is 62 we need 2 more which is '{' and '|' now it 64
+                result += (char) ('a' + (num - 36));
+        }
+        return result;
     }
 }
