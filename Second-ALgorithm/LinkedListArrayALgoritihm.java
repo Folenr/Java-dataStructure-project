@@ -11,13 +11,13 @@ public class LinkedListArrayALgoritihm {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
-            int counterMin=0;
-            int counterones=0;
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
             String line=sc.nextLine();
             LocalDate Date = LocalDate.parse(line, formatter); // turn the String into date
             int firstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
+            int counterones=0;
+            int counterMin=0;
             int index =0;
             while (sc.hasNextLine()) { //loop from first line to last line in file
                 line = sc.nextLine();
@@ -31,10 +31,14 @@ public class LinkedListArrayALgoritihm {
                 }
                 index++;
             }
+            int counterzeros= (counterMin - counterones);
             search(arr,firstDay);
             edit(arr,firstDay);
             delete(arr,firstDay);
-            display(counterones,counterMin);
+            displayMinute(counterMin);
+            displayOnes(counterones);
+            displayzeros(counterzeros);
+
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
@@ -85,7 +89,8 @@ public class LinkedListArrayALgoritihm {
             int startMin = scan.nextInt();//get the start min index
 
             System.out.print("Enter end minute: ");
-            int endMin = scan.nextInt();//get the end min index12
+            int endMin = scan.nextInt();//get the end min index
+
             scan.nextLine();
 
             System.out.print("Enter newValues (0/1 string): ");
@@ -136,10 +141,15 @@ public class LinkedListArrayALgoritihm {
         }
 
 
-        public static void display(int counterMin,int counterones){
-            int counterzeros= counterMin - counterones;
+        public static void displayMinute(int counterMin){
             System.out.println("number of minutes : " + counterMin);
+        }
+
+        public static void displayOnes(int counterones){
             System.out.println("number of ones : " + counterones);
+        }
+
+        public static void displayzeros(int counterzeros){
             System.out.println("number of zeros : " + counterzeros);
         }
 
