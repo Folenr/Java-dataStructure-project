@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class SixBitsAlgorithm {
     private int firstDay;
     private int line;
-    private final String[] days;
+    private String[] days;
 
     public SixBitsAlgorithm(int line){
         this.line=line;
