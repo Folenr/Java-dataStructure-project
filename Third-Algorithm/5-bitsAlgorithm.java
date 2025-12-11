@@ -90,7 +90,7 @@ public class Main {
         int counter = 0;
         for(int i=0; i<days.length; i++)
             counter += toBinary(days,i).length();
-        System.out.println(counter);
+        System.out.println("The total number of minutes is : " + counter);
     }
 
     public static void displayZerosOnes(String[] days) {
@@ -105,8 +105,8 @@ public class Main {
                     ones++;
         }
 
-        System.out.println("The total number of ones is:  " + ones);
-        System.out.println("The total number of zeros is:  " + zeros);
+        System.out.println("The total number of ones is: " + ones);
+        System.out.println("The total number of zeros is: " + zeros);
     }
 
 
