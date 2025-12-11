@@ -4,16 +4,17 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class SixBitsAlgorithm {
-    private String[] days;
     private int firstDay;
+    private int line;
 
-    public SixBitsAlgorithm() {
+    public SixBitsAlgorithm(int line){
+        this.line=line;
         readFile();
     }
+    private final String[] days = new String[line];
 
     private void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
-        this.days = new String[10]; //initial an array with size 10 days
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
             FileInputStream fis = new FileInputStream("input.txt");
