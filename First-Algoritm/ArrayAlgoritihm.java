@@ -84,7 +84,7 @@ public class ArrayAlgoritihm {
     public void displayDays(){
         System.out.println("The number of days is :  " + this.days.length);
     }
-    public void displayMin(String[] days){
+    public void displayMin(){
         int min =0;
         for (int i=0;i< this.days.length;i++)
             min += toBinary(this.days[i]).length();
