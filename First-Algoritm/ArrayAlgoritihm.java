@@ -7,7 +7,7 @@ import java.time.*;
 public class ArrayAlgoritihm {
     private int firstDay;
     private int line;
-    private final String[] days;
+    private String[] days;
 
     public ArrayAlgoritihm(int line){
         this.line=line;
