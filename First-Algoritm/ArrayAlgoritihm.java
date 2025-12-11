@@ -35,14 +35,9 @@ public class ArrayAlgoritihm {
     }
     //اذا شغال تصلحش
     public void search(){
-        Scanner scan = new Scanner(System.in);
         int index = getIndex();
-
-        int startMin,endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;//get the start min index
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt() - 1;//get the end min index
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
 
         String binaryNum = toBinary(this.days[index]);
         //take a substring and print it
@@ -53,11 +48,8 @@ public class ArrayAlgoritihm {
         Scanner scan = new Scanner(System.in);
         int index = getIndex();
 
-        int startMin,endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt() - 1;
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
         int[] values = new int[endMin-startMin + 1];
         System.out.print("Enter the values: ");
         String valString = "";
@@ -73,14 +65,9 @@ public class ArrayAlgoritihm {
     }
 
     public void delete(){
-        Scanner scan = new Scanner(System.in);
         int index = getIndex();
-
-        int startMin,endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;//get the start min index
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt();//get the end min index
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
 
         String binaryNum = toBinary(this.days[index]);
         StringBuilder binaryNumB = new StringBuilder(binaryNum);//this object make me able to delete a part of the string
@@ -128,7 +115,7 @@ public class ArrayAlgoritihm {
     private String toHexa(String binary){ //turn a binary to hexa
         String result = ""; //get the results per day
         for(int i = 0; i+4 <= binary.length(); i+=4) {
-                result += Integer.toHexString(Integer.parseInt(binary.substring(i, i+4),2)).toUpperCase();
+            result += Integer.toHexString(Integer.parseInt(binary.substring(i, i+4),2)).toUpperCase();
         }
         if(binary.length()%4 !=0) {
             result += "+";
@@ -150,5 +137,14 @@ public class ArrayAlgoritihm {
             }
         }
         return binaryNum;
+    }
+    private int[] getRange(){
+        Scanner scan = new Scanner(System.in);
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+        return new int[] {startMin,endMin};
     }
 }
