@@ -5,16 +5,17 @@ import java.time.format.DateTimeFormatter;
 import java.math.BigInteger;
 
 public class FiveBitsAlgorithm {
-    private String[] days;
     private int firstDay;
+    private int line;
 
-    public FiveBitsAlgorithm() {
+    public FiveBitsAlgorithm(int line){
+        this.line=line;
         readFile();
     }
+    private final String[] days = new String[line];
 
     private void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
-        this.days = new String[10]; //initial an array with size 10 days
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
             FileInputStream fis = new FileInputStream("input.txt");
