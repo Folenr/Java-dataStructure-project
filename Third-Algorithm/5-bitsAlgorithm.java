@@ -17,14 +17,10 @@ public class Main {
             int counter = 0;
             while(sc.hasNextLine()) {
                 line = sc.nextLine().replaceAll("\\s+", ""); //get the lines from first to last in file
-                String result = ""; //get the results per day
-                for(int i = 0; i+5 <= line.length(); i+=5) { //take just 5 char from the line till the line ends
-                    result += Integer.toString(Integer.parseInt(line.substring(i, i+5),2), 32).toUpperCase(); //take a binary substring and convert it to decimal and finaly convert it to Base-32 system and make it uppercase
-                }
-                days[counter] = result; //add the result in it specific day
+                days[counter] = to5Bits(line); //add the result in it specific day
                 counter++;
             }
-            search(days, firstDay);
+            edit(days, firstDay);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -41,13 +37,35 @@ public class Main {
         System.out.print("Enter the end minute:  ");
         endMin = scan.nextInt() - 1;//get the end min index
 
-        String binaryNum = "";
-        for (int i=0; i<days[index].length(); i++) {//convert all hexadecimal char to binary and add all of them to binaryNum
-            binaryNum += String.format("%05d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 32).toString(2)));
-        }
+        String binaryNum = toBinary(days,index);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
     }
+
+    public static void edit(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);
+        int index = getIndex(days,firstDay);
+
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+        int[] values = new int[endMin-startMin + 1];
+        System.out.print("Enter the values: ");
+        String valString = "";
+        for(int i=0; i<values.length; i++) {
+            values[i] = scan.nextInt();
+            valString += Integer.toString(values[i]);
+        }
+
+        String binaryNum = toBinary(days,index);
+        //add the value to the zeros and ones
+        String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
+        //add the edited result to the array
+        days[index] = to5Bits(edited);
+    }
+
     private static int getIndex(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);//scanner for the user input
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
@@ -60,4 +78,20 @@ public class Main {
         return index;
     }
 
+    private static String toBinary(String[] days,int index) {
+        String binaryNum = "";
+        for (int i=0; i<days[index].length(); i++) {//convert all 5-bits char to binary and add all of them to binaryNum
+            binaryNum += String.format("%05d", Integer.parseInt(new BigInteger(String.valueOf(days[index].charAt(i)), 32).toString(2)));
+        }
+        return binaryNum;
+    }
+
+    private static String to5Bits(String edited){
+        //convert it to 5-bits system
+        String result = "";
+        for(int i=0; i+5<=edited.length(); i+=5) {
+            result += Integer.toString(Integer.parseInt(edited.substring(i, i+5),2), 32).toUpperCase();
+        }
+        return result;
+    }
 }
