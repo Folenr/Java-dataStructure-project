@@ -6,6 +6,7 @@ import java.time.*;
 
 public class ArrayAlgoritihm {
     public static void main(String[] args) {
+        java.util.Locale.setDefault(java.util.Locale.US);
         String[] days = new String[10]; //initial an array with size 10 days
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
@@ -22,15 +23,16 @@ public class ArrayAlgoritihm {
                 days[counter] = toHexa(line); //add the result in it specific day
                 counter++;
             }
+            displayZerosOnes(days);
             delete(days,firstDay);
-            display(days,firstDay);
+            search(days,firstDay);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
     //اذا شغال تصلحش
-    public static void display(String[] days,int firstDay){
+    public static void search(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);
         int index = getIndex(days,firstDay);
 
@@ -87,6 +89,29 @@ public class ArrayAlgoritihm {
 
         days[index] = toHexa(binaryNum);
     }
+    public static void displayDays(String[] days){
+        System.out.println("The number of days is :  " + days.length);
+    }
+    public static void displayMin(String[] days){
+        int min =0;
+        for (int i=0;i< days.length;i++)
+            min += toBinary(days[i]).length();
+        System.out.println("The total number of minutes is :  " + min);
+    }
+    public static void displayZerosOnes(String[] days){
+        int zeros = 0;
+        int ones = 0;
+        for (String day : days)
+            for (int j = 0; j < toBinary(day).length(); j++)
+                if (toBinary(day).charAt(j) == '1')
+                    ones++;
+                else
+                    zeros++;
+
+        System.out.println("The total number of ones is :  " + ones);
+        System.out.println("The total number of zeros is :  " + zeros);
+    }
+
 
     private static int getIndex(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);//scanner for the user input
@@ -105,9 +130,9 @@ public class ArrayAlgoritihm {
         for(int i = 0; i+4 <= binary.length(); i+=4) {
                 result += Integer.toHexString(Integer.parseInt(binary.substring(i, i+4),2)).toUpperCase();
         }
-        if(binary.length()-1%4 !=0) {
+        if(binary.length()%4 !=0) {
             result += "+";
-            for(int i=binary.length()-1%4;i>0;i--)
+            for(int i=(binary.length()%4);i>0;i--)
                 result += binary.charAt(binary.length()-i);
         }
         return result;
