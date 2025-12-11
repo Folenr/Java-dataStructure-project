@@ -20,7 +20,9 @@ public class Main {
                 days[counter] = to5Bits(line); //add the result in it specific day
                 counter++;
             }
-            edit(days, firstDay);
+            search(days, firstDay);
+            delete(days, firstDay);
+            search(days, firstDay);
 
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -63,6 +65,21 @@ public class Main {
         //add the value to the zeros and ones
         String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
         //add the edited result to the array
+        days[index] = to5Bits(edited);
+    }
+
+    public static void delete(String[] days,int firstDay){
+        Scanner scan = new Scanner(System.in);
+        int index = getIndex(days,firstDay);
+
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+
+        String binaryNum = toBinary(days,index);
+        String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
         days[index] = to5Bits(edited);
     }
 
