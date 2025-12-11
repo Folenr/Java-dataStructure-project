@@ -69,6 +69,7 @@ public class ArrayAlgoritihm {
         //add the edited result to the array
         days[index] = toHexa(edited);
     }
+
     public static void delete(String[] days,int firstDay){
         Scanner scan = new Scanner(System.in);
         int index = getIndex(days,firstDay);
@@ -84,7 +85,6 @@ public class ArrayAlgoritihm {
         binaryNumB.delete(startMin,endMin);
         binaryNum = binaryNumB.toString();
 
-        //add the edited result to the array
         days[index] = toHexa(binaryNum);
     }
 
@@ -103,14 +103,26 @@ public class ArrayAlgoritihm {
     private static String toHexa(String binary){ //turn a binary to hexa
         String result = ""; //get the results per day
         for(int i = 0; i+4 <= binary.length(); i+=4) {
-            result += Integer.toHexString(Integer.parseInt(binary.substring(i, i+4),2)).toUpperCase();
+                result += Integer.toHexString(Integer.parseInt(binary.substring(i, i+4),2)).toUpperCase();
+        }
+        if(binary.length()-1%4 !=0) {
+            result += "+";
+            for(int i=binary.length()-1%4;i>0;i--)
+                result += binary.charAt(binary.length()-i);
         }
         return result;
     }
     private static String toBinary(String hexa){//turn a hexa to binary
         String binaryNum = "";
         for (int i=0; i<hexa.length(); i++) {//convert all hexadecimal char to binary and add all of them to binaryNum
-            binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(hexa.charAt(i)), 16).toString(2)));
+            if(hexa.charAt(i) != '+')
+                binaryNum += String.format("%04d", Integer.parseInt(new BigInteger(String.valueOf(hexa.charAt(i)), 16).toString(2)));
+            else{
+                hexa = hexa.replaceAll("\\+", "");
+                for (int j=i; j<hexa.length(); j++)
+                    binaryNum += hexa.charAt(j);
+                break;
+            }
         }
         return binaryNum;
     }
