@@ -3,52 +3,50 @@ import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class Main {
-    public static void main(String[] args) {
+public class SixBitsAlgorithm {
+    private String[] days;
+    private int firstDay;
+
+    public SixBitsAlgorithm() {
+        readFile();
+    }
+
+    private void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
-        String[] days = new String[10]; //initial an array with size 10 days
+        this.days = new String[10]; //initial an array with size 10 days
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
             String line = sc.nextLine(); //first line for the date
             LocalDate Date = LocalDate.parse(line, formatter); //a temp date to turn the String into date
-            int firstDay = (int) Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
+            this.firstDay = (int) Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
             int counter = 0;
             while (sc.hasNextLine()) {
                 line = sc.nextLine().replaceAll("\\s+", ""); //get the lines from first to last in file
-                days[counter] = to6Bits(line); //add the result in it specific day
+                this.days[counter] = to6Bits(line); //add the result in it specific day
                 counter++;
             }
-            displayZerosOnes(days);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
 
-    public static void search(String[] days, int firstDay) {
-        Scanner scan = new Scanner(System.in);
-        int index = getIndex(days, firstDay);
-        int startMin, endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;//get the start min index
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt() - 1;//get the end min index
+    public void search() {
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
 
-        String binaryNum = toBinary(days,index);
+        String binaryNum = toBinary(index);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
     }
 
-    public static void edit(String[] days, int firstDay) {
+    public void edit() {
         Scanner scan = new Scanner(System.in);
-        int index = getIndex(days, firstDay);
-
-        int startMin, endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt() - 1;
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
         int[] values = new int[endMin-startMin + 1];
         System.out.print("Enter the values: ");
         String valString = "";
@@ -57,42 +55,37 @@ public class Main {
             valString += Integer.toString(values[i]);
         }
 
-        String binaryNum = toBinary(days,index);
+        String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
-        days[index] = to6Bits(edited);
+        this.days[index] = to6Bits(edited);
     }
 
-    public static void delete(String[] days, int firstDay) {
-        Scanner scan = new Scanner(System.in);
-        int index = getIndex(days, firstDay);
+    public void delete() {
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0],endMin = range[1];
 
-        int startMin, endMin;
-        System.out.print("Enter the start minute:  ");
-        startMin = scan.nextInt() - 1;
-        System.out.print("Enter the end minute:  ");
-        endMin = scan.nextInt() - 1;
-
-        String binaryNum = toBinary(days,index);
+        String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
-        days[index] = to6Bits(edited);
+        this.days[index] = to6Bits(edited);
     }
 
-    public static void displayDays(String[] days){
+    public void displayDays(){
         System.out.println("The number of days is :  " + days.length);
     }
 
-    public static void displayMin(String[] days){
+    public void displayMin(){
         int counter = 0;
-        for(int i=0; i<days.length; i++)
-            counter += toBinary(days,i).length();
+        for(int i=0; i<this.days.length; i++)
+            counter += toBinary(i).length();
         System.out.println("The total number of minutes is : " + counter);
     }
 
-    public static void displayZerosOnes(String[] days) {
+    public void displayZerosOnes() {
         int zeros = 0;
         int ones = 0;
-        for (int i = 0; i < days.length; i++) {
-            String binary = toBinary(days, i);
+        for (int i = 0; i < this.days.length; i++) {
+            String binary = toBinary(i);
             for (int j = 0; j < binary.length(); j++)
                 if (binary.charAt(j) == '0')
                     zeros++;
@@ -104,7 +97,7 @@ public class Main {
         System.out.println("The total number of zeros is: " + zeros);
     }
 
-    private static int getIndex(String[] days, int firstDay) {
+    private int getIndex() {
         Scanner scan = new Scanner(System.in);//scanner for the user input
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
@@ -112,11 +105,11 @@ public class Main {
 
         LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
         int currentDay = (int) Date.toEpochDay();//convert from date to integer
-        int index = currentDay - firstDay; //get the index of the day in days array
+        int index = currentDay - this.firstDay; //get the index of the day in days array
         return index;
     }
 
-    private static int toDecimal(char c) {// from char to decimal
+    private int toDecimal(char c) {// from char to decimal
         if (c >= '0' && c <= '9') {
             return c - '0';
         } else if (c >= 'A' && c <= 'Z') {
@@ -129,17 +122,17 @@ public class Main {
         return 63;// |
     }
 
-    private static String toBinary(String[] days,int index) {// from decimal to binary
+    private String toBinary(int index) {// from decimal to binary
         String binaryNum = "";
-        for (int i = 0; i < days[index].length(); i++) {//convert all char to binary and add all of them to binaryNum
-            char c = days[index].charAt(i);
+        for (int i = 0; i < this.days[index].length(); i++) {//convert all char to binary and add all of them to binaryNum
+            char c = this.days[index].charAt(i);
             String binary = Integer.toBinaryString(toDecimal(c));
             binaryNum += String.format("%6s", binary).replace(" ", "0");
         }
         return binaryNum;
     }
 
-    private static String to6Bits(String edited){
+    private String to6Bits(String edited){
         String result = ""; //get the results per day
         for (int i = 0; i + 6 <= edited.length(); i += 6) { //take just 6 char from the line till the line ends
             int num = Integer.parseInt(edited.substring(i, i + 6), 2); //convert from binary to decimal
@@ -150,4 +143,15 @@ public class Main {
         }
         return result;
     }
+
+    private int[] getRange(){
+        Scanner scan = new Scanner(System.in);
+        int startMin,endMin;
+        System.out.print("Enter the start minute:  ");
+        startMin = scan.nextInt() - 1;
+        System.out.print("Enter the end minute:  ");
+        endMin = scan.nextInt() - 1;
+        return new int[] {startMin,endMin};
+    }
+
 }
