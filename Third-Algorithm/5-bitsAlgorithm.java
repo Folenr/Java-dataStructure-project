@@ -7,7 +7,7 @@ import java.math.BigInteger;
 public class FiveBitsAlgorithm {
     private int firstDay;
     private int line;
-    private final String[] days;
+    private String[] days;
 
     public FiveBitsAlgorithm(int line){
         this.line=line;
