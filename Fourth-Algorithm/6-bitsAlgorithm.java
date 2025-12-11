@@ -36,19 +36,13 @@ public class Main {
     public static void search(String[] days, int firstDay) {
         Scanner scan = new Scanner(System.in);
         int index = getIndex(days, firstDay);
-
         int startMin, endMin;
         System.out.print("Enter the start minute:  ");
         startMin = scan.nextInt() - 1;//get the start min index
         System.out.print("Enter the end minute:  ");
         endMin = scan.nextInt() - 1;//get the end min index
 
-        String binaryNum = "";
-        for (int i = 0; i < days[index].length(); i++) {//convert all char to binary and add all of them to binaryNum
-            char c = days[index].charAt(i);
-            String binary = Integer.toBinaryString(toDecimal(c));
-            binaryNum += String.format("%6s", binary).replace(" ", "0");
-        }
+        String binaryNum = toBinary(days,index);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
     }
@@ -65,7 +59,7 @@ public class Main {
         return index;
     }
 
-    private static int toDecimal(char c) {
+    private static int toDecimal(char c) {// from char to decimal
         if (c >= '0' && c <= '9') {
             return c - '0';
         } else if (c >= 'A' && c <= 'Z') {
@@ -76,5 +70,15 @@ public class Main {
             return 62;
         }
         return 63;// |
+    }
+
+    private static String toBinary(String[] days,int index) {// from decimal to binary
+        String binaryNum = "";
+        for (int i = 0; i < days[index].length(); i++) {//convert all char to binary and add all of them to binaryNum
+            char c = days[index].charAt(i);
+            String binary = Integer.toBinaryString(toDecimal(c));
+            binaryNum += String.format("%6s", binary).replace(" ", "0");
+        }
+        return binaryNum;
     }
 }
