@@ -15,7 +15,7 @@ public class LinkedListArrayALgoritihm {
         readFile();
     }
 
-    public void readFile() {
+    private void readFile() {
         java.util.Locale.setDefault(Locale.US);
         arr = new LinkedList[line];
         for (int j = 0; j < arr.length; j++) {
