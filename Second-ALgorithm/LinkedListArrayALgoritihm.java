@@ -8,6 +8,7 @@ public class LinkedListArrayALgoritihm {
     private int firstDay;
     private int line;
     private LinkedList<Integer>[] arr;
+    private int deleted = 0;
 
     public LinkedListArrayALgoritihm(int line){
         this.line = line;
@@ -16,7 +17,7 @@ public class LinkedListArrayALgoritihm {
 
     public void readFile() {
         java.util.Locale.setDefault(Locale.US);
-        arr = new LinkedList[10];
+        arr = new LinkedList[line];
         for (int j = 0; j < arr.length; j++) {
             arr[j] = new LinkedList<>();
         }
@@ -29,27 +30,19 @@ public class LinkedListArrayALgoritihm {
             String line = sc.nextLine();
             LocalDate date = LocalDate.parse(line, formatter);
 
-            // store into class field
             this.firstDay = (int) date.toEpochDay();
-
-            int counterOnes = 0;
-            int counterMin = 0;
             int index = 0;
 
-            while (sc.hasNextLine() && index < 10) {
+            while (sc.hasNextLine()) {
                 line = sc.nextLine().replaceAll("\\s+", "");
 
                 for (int i = 0; i < line.length(); i++) {
-                    counterMin++;
                     if (line.charAt(i) == '1') {
                         arr[index].add(i + 1);
-                        counterOnes++;
                     }
                 }
                 index++;
             }
-
-            int counterZeros = counterMin - counterOnes;
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -57,18 +50,10 @@ public class LinkedListArrayALgoritihm {
     }
 
     public void search() {
-        Scanner scan = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
-
-        System.out.print("Enter date (DD MM YYYY): ");
-        String day = scan.nextLine();
-
-        LocalDate date = LocalDate.parse(day, formatter);
-        int index = (int) date.toEpochDay() - firstDay;
-
-        int[] rang = getrang();
-        int startMin = rang[0];
-        int endMin = rang[1];
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
 
         LinkedList<Integer> list = arr[index];
 
@@ -103,28 +88,23 @@ public class LinkedListArrayALgoritihm {
 
     public void edit() {
         Scanner scan = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        int index = getIndex();
 
-        System.out.print("Enter date (DD MM YYYY): ");
-        String day = scan.nextLine();
-
-        int[] rang = getrang();
-        int startMin = rang[0];
-        int endMin = rang[1];
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
 
         int length = endMin - startMin + 1;
         int[] newValues = new int[length];
 
-        System.out.println("Enter values (0/1): ");
+        System.out.println("Enter the values : ");
         for (int i = 0; i < length; i++) {
             newValues[i] = scan.nextInt();
         }
 
-        LocalDate date = LocalDate.parse(day, formatter);
-        int index = (int) date.toEpochDay() - firstDay;
 
         LinkedList<Integer> list = arr[index];
-        getindex_remove(list, startMin, endMin);
+        getIndexRemove(list, startMin, endMin);
 
         for (int i = 0; i < length; i++) {
             if (newValues[i] == 1)
@@ -132,46 +112,45 @@ public class LinkedListArrayALgoritihm {
         }
 
         Collections.sort(list);
-        System.out.println("edit complete!");
     }
 
     public void delete() {
-        Scanner scan = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        int index = getIndex();
 
-        System.out.print("Enter date (DD MM YYYY): ");
-        String day = scan.nextLine();
-
-        int[] rang = getrang();
-        int startMin = rang[0];
-        int endMin = rang[1];
-
-        LocalDate date = LocalDate.parse(day, formatter);
-        int index = (int) date.toEpochDay() - firstDay;
-
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
+        deleted+=endMin - startMin;
         LinkedList<Integer> list = arr[index];
-
-        getindex_remove(list, startMin, endMin);
-
+        getIndexRemove(list, startMin, endMin);
         Collections.sort(list);
-
-        System.out.println("delete complete!");
     }
 
-
-    public void displayMinute(int counterMin) {
-        System.out.println("number of minutes : " + counterMin);
+    public void displayDays() {
+        System.out.println("The number of days is : " + this.arr.length);
     }
 
-    public void displayOnes(int counterones) {
-        System.out.println("number of ones : " + counterones);
+    public void displayMin() {
+        System.out.println("The total number of minutes is : " + ((this.arr.length*24*60) - deleted));
     }
 
-    public void displayzeros(int counterzeros) {
-        System.out.println("number of zeros : " + counterzeros);
+    public void displayOnes() {
+        int counter = 0;
+        for(int i=0; i<this.arr.length; i++) {
+            counter += this.arr[i].size();
+        }
+        System.out.println("number of ones : " + counter);
     }
 
-    private void getindex_remove(LinkedList<Integer> list, int s, int e) {
+    public void displayZeros() {
+        int counter = 0;
+        for(int i=0; i<this.arr.length; i++) {
+            counter += this.arr[i].size();
+        }
+        System.out.println("number of zeros : " + (((this.arr.length*24*60) - deleted) - counter));
+    }
+
+    private void getIndexRemove(LinkedList<Integer> list, int s, int e) {
         for (int i = 0; i < list.size(); i++) {
             int minute = list.get(i);
             if (minute >= s && minute <= e) {
@@ -181,7 +160,18 @@ public class LinkedListArrayALgoritihm {
         }
     }
 
-    private int[] getrang() {
+    private int getIndex(){
+        Scanner scan = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+
+        System.out.print("Enter date (DD MM YYYY): ");
+        String day = scan.nextLine();
+
+        LocalDate date = LocalDate.parse(day, formatter);
+        return (int) date.toEpochDay() - firstDay;
+    }
+
+    private int[] getRange() {
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter startMin: ");
         int startMin = scan.nextInt();
