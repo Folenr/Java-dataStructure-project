@@ -4,65 +4,166 @@ import java.util.*;
 import java.io.*;
 
 public class LinkedListArrayALgoritihm {
-    public static void main(String[] args) {
-        LinkedList<Integer>[] arr = new LinkedList[10]; // linked lists in array
-        for(int j=0;j< arr.length;j++){
-            arr[j]= new LinkedList<>();//create new linked list in array
+
+    private final int firstDay;
+    private final int line;
+    private LinkedList<Integer>[] arr;
+    private int deleted = 0;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public LinkedListArrayALgoritihm(int line){
+        this.line = line;
+        this.arr = new LinkedList[this.line];
+        this.firstDay = readFile();
+    }
+
+    private int readFile() {
+        java.util.Locale.setDefault(Locale.US);
+        for (int j = 0; j < arr.length; j++) {
+            arr[j] = new LinkedList<>();
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//format a string to be a date
         try {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
-            String line=sc.nextLine();
-            LocalDate Date = LocalDate.parse(line, formatter); // turn the String into date
-            int firstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
-            int index =0;
-            while (sc.hasNextLine()) { //loop from first line to last line in file
-                line = sc.nextLine();
-                line = line.replaceAll("\\s+", "");
-                for (int i = 0; i <line.length(); i++){ //loop in the line from first char to last char
-                    if (line.charAt(i) == '1') {//make sure its one
+            LocalDate date = LocalDate.parse(sc.nextLine(), formatter);
+            int index = 0;
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().replaceAll("\\s+", "");
+                for (int i = 0; i < line.length(); i++) {
+                    if (line.charAt(i) == '1') {
                         arr[index].add(i + 1);
                     }
                 }
                 index++;
             }
-            display(arr,firstDay);
-        }catch (FileNotFoundException e) {
+            sc.close();
+            return (int) date.toEpochDay();
+        } catch (FileNotFoundException e) {
             System.out.println("File not found");
+            return 0;
         }
-        
     }
-    public static void display( LinkedList<Integer>[] arr,int firstDay){
-        Scanner scan = new Scanner(System.in);//scanner for the user input
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");//formating the date
-        System.out.print("Enter the Date of format (DD MM YYYY):  ");
-        String day = scan.nextLine(); //user enter the day
 
-        LocalDate Date = LocalDate.parse(day, formatter);//convert from string to the format
-        int currentDay = (int)Date.toEpochDay();//convert from date to integer
-        int index = currentDay-firstDay; //get the index of the day in days array
+    public void search() {
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
 
-        int startMin,endMin;
-        System.out.print("Enter the start minutes:  ");
-        startMin = scan.nextInt();//get the start min index
-        System.out.print("Enter the end minutes:  ");
-        endMin = scan.nextInt();//get the end min index
+        LinkedList<Integer> list = arr[index];
+
+        if (list.isEmpty()) {
+            for (int i = startMin; i <= endMin; i++)
+                System.out.print(0);
+            System.out.println();
+            return;
+        }
 
         int listIndex = 0;
-        int element = arr[index].get(listIndex);
+        int element = list.getFirst();
 
-        while(element < startMin){
+        while (listIndex < list.size() && element < startMin) {
             listIndex++;
-            element = arr[index].get(listIndex);
+            if (listIndex < list.size())
+                element = list.get(listIndex);
         }
-        for(int i = startMin;i<=endMin;i++){
-            if(i==element){
-                listIndex++;
-                element = arr[index].get(listIndex);
+
+        for (int i = startMin; i <= endMin; i++) {
+            if (listIndex < list.size() && i == element) {
                 System.out.print(1);
-            }else
+                listIndex++;
+                if (listIndex < list.size())
+                    element = list.get(listIndex);
+            } else {
                 System.out.print(0);
+            }
         }
+        System.out.println();
+    }
+
+    public void edit() {
+        int index = getIndex();
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
+        int length = endMin - startMin + 1;
+        int[] newValues = new int[length];
+
+        System.out.print("Enter the values: ");
+        for (int i = 0; i < length; i++) {
+            newValues[i] = Integer.parseInt(scanner.nextLine());
+        }
+
+        LinkedList<Integer> list = arr[index];
+        getIndexRemove(list, startMin, endMin);
+
+        for (int i = 0; i < length; i++) {
+            if (newValues[i] == 1)
+                list.add(startMin + i);
+        }
+
+        Collections.sort(list);
+    }
+
+    public void delete() {
+        int index = getIndex();
+
+        int[] range = getRange();
+        int startMin = range[0];
+        int endMin = range[1];
+        deleted+=endMin - startMin;
+        LinkedList<Integer> list = arr[index];
+        getIndexRemove(list, startMin, endMin);
+        Collections.sort(list);
+    }
+
+    public void displayDays() {
+        System.out.println("The number of days is : " + this.arr.length);
+    }
+
+    public void displayMin() {
+        System.out.println("The total number of minutes is : " + ((this.arr.length*24*60) - deleted));
+    }
+
+    public void displayOnes() {
+        int counter = 0;
+        for(int i=0; i<this.arr.length; i++) {
+            counter += this.arr[i].size();
+        }
+        System.out.println("The total number of ones is :  " + counter);
+    }
+
+    public void displayZeros() {
+        int counter = 0;
+        for(int i=0; i<this.arr.length; i++) {
+            counter += this.arr[i].size();
+        }
+        System.out.println("The total number of zeros is :  " + (((this.arr.length*24*60) - deleted) - counter));
+    }
+
+    private void getIndexRemove(LinkedList<Integer> list, int s, int e) {
+        for (int i = 0; i < list.size(); i++) {
+            int minute = list.get(i);
+            if (minute >= s && minute <= e) {
+                list.remove(i);
+                i--;
+            }
+        }
+    }
+
+    private int getIndex(){
+        System.out.print("Enter the Date of format (DD MM YYYY):  ");
+        String day = scanner.nextLine();
+        LocalDate date = LocalDate.parse(day, formatter);
+        return (int) date.toEpochDay() - firstDay;
+    }
+
+    private int[] getRange() {
+        System.out.print("Enter the start minute:  ");
+        int startMin = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter the end minute:  ");
+        int endMin = Integer.parseInt(scanner.nextLine());
+        return new int[]{startMin, endMin};
     }
 }
