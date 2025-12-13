@@ -83,7 +83,7 @@ public class SixBitsAlgorithm {
         System.out.println("The total number of minutes is : " + counter);
     }
 
-    public void displayZerosOnes() {
+    public void displayZeros() {
         int zeros = 0;
         for (int i = 0; i < this.days.length; i++) {
             String binary = toBinary(i);
