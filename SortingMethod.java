@@ -7,4 +7,5 @@ public abstract  class SortingMethod{
     abstract void displayMin();
     abstract void displayZeros();
     abstract void displayOnes();
+    abstract void save();
 }
