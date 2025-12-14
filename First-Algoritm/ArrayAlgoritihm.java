@@ -29,10 +29,10 @@ public class ArrayAlgoritihm extends SortingMethod{
             sc.close();
             fis = new FileInputStream("input.txt");
             sc = new Scanner(fis);
-            sc.nextLine();//skip the date line
+            String line = sc.nextLine();//skip the date line
             counter=0;
             while(sc.hasNextLine()) {
-                String line = sc.nextLine();
+                line = sc.nextLine();
                 this.days[counter] = toHexa(line); //add the result in it specific day
                 counter++;
             }
@@ -110,6 +110,20 @@ public class ArrayAlgoritihm extends SortingMethod{
                     ones++;
 
         System.out.println("The total number of ones is :  " + ones);
+    }
+
+    public void save() {
+        try (FileWriter writer = new FileWriter("input.txt")) {
+            writer.write(LocalDate.ofEpochDay(firstDay).format(formatter)+"\n");
+            for(int i=0;i<days.length;i++){
+                writer.write(toBinary(this.days[i])+"\n");
+            }
+
+            System.out.println("All new Values are saved.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
