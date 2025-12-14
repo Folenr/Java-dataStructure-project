@@ -24,9 +24,6 @@ public class FileGenerator {
                     line.append(ran); // Append 0 or 1
                     if (ran==1) {ranOne+=1;}
                     else ranZero+=1;
-                    if (j < numbersPerLine - 1) {
-                        line.append(" "); // Add space between numbers
-                    }
                 }
                 writer.write(line.toString() + "\n"); // Write the line to the file
             }
