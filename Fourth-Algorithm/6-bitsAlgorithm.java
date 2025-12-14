@@ -3,20 +3,19 @@ import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class SixBitsAlgorithm {
-    private final int firstDay;
-    private final int line;
+public class SixBitsAlgorithm extends SortingMethod{
+    private int firstDay;
+    private final int lines;
     private String[] days;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public SixBitsAlgorithm(int line){
-        this.line = line;
-        this.days = new String[this.line];
-        this.firstDay = readFile();
+    public SixBitsAlgorithm(int lines){
+        this.lines = lines;
+        this.days = new String[this.lines];
     }
 
-    private int readFile() {
+    public void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
         try {
             FileInputStream fis = new FileInputStream("input.txt");
@@ -29,10 +28,9 @@ public class SixBitsAlgorithm {
                 counter++;
             }
             sc.close();
-            return (int) Date.toEpochDay();
+            this.firstDay = (int) Date.toEpochDay();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return 0;
         }
     }
 
