@@ -115,7 +115,19 @@ public class FiveBitsAlgorithm extends SortingMethod{
         System.out.println("The total number of ones is: " + ones);
     }
 
-    public void save(){}
+    public void save(){
+        try (FileWriter writer = new FileWriter("input.txt")) {
+            writer.write(LocalDate.ofEpochDay(firstDay).format(formatter)+"\n");
+            for(int i=0;i<days.length;i++){
+                writer.write(toBinary(i)+"\n");
+            }
+
+            System.out.println("All new Values are saved.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private int getIndex() {
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
