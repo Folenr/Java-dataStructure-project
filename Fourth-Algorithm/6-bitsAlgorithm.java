@@ -5,14 +5,12 @@ import java.time.format.DateTimeFormatter;
 
 public class SixBitsAlgorithm extends SortingMethod{
     private int firstDay;
-    private final int lines;
     private String[] days;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
     public SixBitsAlgorithm(int lines){
-        this.lines = lines;
-        this.days = new String[this.lines];
+        this.days = new String[lines];
     }
 
     public void readFile() {
@@ -128,10 +126,18 @@ public class SixBitsAlgorithm extends SortingMethod{
 
     private String toBinary(int index) {// from decimal to binary
         StringBuilder binaryNum = new StringBuilder();
+        String sixBits = this.days[index];
         for (int i = 0; i < this.days[index].length(); i++) {//convert all char to binary and add all of them to binaryNum
-            char c = this.days[index].charAt(i);
-            String binary = Integer.toBinaryString(toDecimal(c));
-            binaryNum.append(String.format("%6s", binary).replace(" ", "0"));
+            if (sixBits.charAt(i) != '+') {
+                char c = this.days[index].charAt(i);
+                String binary = Integer.toBinaryString(toDecimal(c));
+                binaryNum.append(String.format("%6s", binary).replace(" ", "0"));
+            }else{
+                sixBits = sixBits.replaceAll("\\+", "");
+                for (int j=i; j<sixBits.length(); j++)
+                    binaryNum.append(sixBits.charAt(j));
+                break;
+            }
         }
         return binaryNum.toString();
     }
@@ -144,6 +150,11 @@ public class SixBitsAlgorithm extends SortingMethod{
                 result.append(Integer.toString(num, 36).toUpperCase());
             else//if it was more than 35 then store a...z this is 62 we need 2 more which is '{' and '|' now it 64
                 result.append((char) ('a' + (num - 36)));
+        }
+        if(edited.length()%6 !=0) {
+            result.append("+");
+            for(int i=(edited.length()%6);i>0;i--)
+                result.append(edited.charAt(edited.length() - i));
         }
         return result.toString();
     }
