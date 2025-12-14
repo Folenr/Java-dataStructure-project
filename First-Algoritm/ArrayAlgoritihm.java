@@ -23,7 +23,6 @@ public class ArrayAlgoritihm extends SortingMethod{
             int counter = 0;
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();
-                line = line.replaceAll("\\s+", ""); //delete all spaces
                 this.days[counter] = toHexa(line); //add the result in it specific day
                 counter++;
             }
