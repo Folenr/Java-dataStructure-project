@@ -115,6 +115,7 @@ public class FiveBitsAlgorithm extends SortingMethod{
         System.out.println("The total number of ones is: " + ones);
     }
 
+    public void save(){}
 
     private int getIndex() {
         System.out.print("Enter the Date of format (DD MM YYYY):  ");
