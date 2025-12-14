@@ -10,8 +10,8 @@ public class FiveBitsAlgorithm extends SortingMethod{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public FiveBitsAlgorithm(int lines){
-        this.days = new String[lines];
+    public FiveBitsAlgorithm(){
+        this.days = new String[0];
     }
 
     public void readFile() {
@@ -22,6 +22,13 @@ public class FiveBitsAlgorithm extends SortingMethod{
             LocalDate Date = LocalDate.parse(sc.nextLine(), formatter); //a temp date to turn the String into date
 
             int counter = 0;
+            while(sc.hasNextLine())
+                counter++;
+            this.days = new String[counter];
+            sc.close();
+            sc = new Scanner(fis);
+            sc.nextLine();//skip the date line
+            counter=0;
             while(sc.hasNextLine()) {
                 String line = sc.nextLine(); //get the lines from first to last in file
                 this.days[counter] = to5Bits(line); //add the result in it specific day
