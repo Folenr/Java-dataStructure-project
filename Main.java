@@ -3,18 +3,26 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Welcome to the java data structure project.\nPlease enter the number of days :  ");
-        int lines = sc.nextInt();
-        sc.nextLine(); // This line consumes the leftover "Enter" key
-        System.out.print("Please enter the first day date (DD MM YYYY) :  ");
-        String date = sc.nextLine();
+        System.out.println("Welcome to the java data structure project.");
+        System.out.println("This project use distinct algorithms for storing data and read them.");
+        System.out.println("Students Developers : [Eng.Tareq AbuFarah,Eng.Iyas Alayyouby,Eng.Mahdi Abo-Obayd].");
+        System.out.println("1. use stored data.");
+        System.out.println("2. create new random data.");
+        System.out.print("Chose your option: ");
+        int option = sc.nextInt();
+        if(option == 2){
+            System.out.print("Please enter the number of days :  ");
+            int lines = sc.nextInt();
+            sc.nextLine(); // This line consumes the leftover "Enter" key
+            System.out.print("Please enter the first day date (DD MM YYYY) :  ");
+            String date = sc.nextLine();
+            FileGenerator.newFile(lines,date);
+        }
         SortingMethod[] sortingMethods = new SortingMethod[4];
-        sortingMethods[0] = new LinkedListArrayALgoritihm(lines);
-        sortingMethods[1] = new ArrayAlgoritihm(lines);
-        sortingMethods[2] = new FiveBitsAlgorithm(lines);
-        sortingMethods[3] = new SixBitsAlgorithm(lines);
-
-        FileGenerator.newFile(lines,date);
+        sortingMethods[0] = new LinkedListArrayALgoritihm();
+        sortingMethods[1] = new ArrayAlgoritihm();
+        sortingMethods[2] = new FiveBitsAlgorithm();
+        sortingMethods[3] = new SixBitsAlgorithm();
         while (true) {
             System.out.println("1. LinkedList inside an Array.");
             System.out.println("2. 4bit encrypting.");
@@ -28,6 +36,7 @@ public class Main {
             else
                 break;
         }
+
     }
     static void sortingMethodsOperations(int choice,SortingMethod[] sortingMethods){
         sortingMethods[choice].readFile();
@@ -55,6 +64,9 @@ public class Main {
                     sortingMethods[choice].edit();
                     break;
                 case 8:
+                    sortingMethods[choice].save();
+                    break;
+                case 9:
                     return;
                 default:
                     System.out.println("Unknown value, Please try again.");
@@ -70,7 +82,8 @@ public class Main {
         System.out.println("5. Delete any set of numbers.");
         System.out.println("6. Search for any set of numbers.");
         System.out.println("7. Edit any set of numbers.");
-        System.out.println("8. Go back.");
+        System.out.println("8. Save the data in File.");
+        System.out.println("9. Go back.");
         System.out.print("Chose your operation :  ");
         return sc.nextInt();
     }
