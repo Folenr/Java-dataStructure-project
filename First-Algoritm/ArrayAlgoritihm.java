@@ -21,8 +21,10 @@ public class ArrayAlgoritihm extends SortingMethod{
             Scanner sc = new Scanner(fis);
             LocalDate Date = LocalDate.parse(sc.nextLine(), formatter); //a temp date to turn the String into date
             int counter = 0;
-            while(sc.hasNextLine())
+            while(sc.hasNextLine()){
                 counter++;
+                sc.nextLine();
+            }
             this.days = new String[counter];
             sc.close();
             sc = new Scanner(fis);
