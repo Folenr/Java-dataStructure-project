@@ -6,13 +6,13 @@ import java.io.*;
 public class LinkedListArrayALgoritihm extends SortingMethod{
 
     private int firstDay;
-    private LinkedList<Integer>[] arr;
+    private LinkedList[] arr;
     private int deleted = 0;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public LinkedListArrayALgoritihm(int lines){
-        this.arr = new LinkedList[lines];
+    public LinkedListArrayALgoritihm(){
+        this.arr = new LinkedList[0];
     }
 
     public void readFile() {
@@ -24,15 +24,22 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
             LocalDate date = LocalDate.parse(sc.nextLine(), formatter);
-            int index = 0;
+            int counter = 0;
+            while(sc.hasNextLine())
+                counter++;
+            this.arr = new LinkedList[counter];
+            sc.close();
+            sc = new Scanner(fis);
+            sc.nextLine();//skip the date line
+            counter=0;
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == '1') {
-                        arr[index].add(i + 1);
+                        arr[counter].add(i + 1);
                     }
                 }
-                index++;
+                counter++;
             }
             sc.close();
             this.firstDay = (int) date.toEpochDay();
@@ -119,7 +126,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
     }
 
     public void displayMin() {
-        System.out.println("The total number of minutes is : " + ((this.arr.length*24*60) - deleted));
+        System.out.println("The total number of minutes is : " + ((this.arr.length*1440) - deleted));
     }
 
     public void displayOnes() {
@@ -135,7 +142,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
         for(int i=0; i<this.arr.length; i++) {
             counter += this.arr[i].size();
         }
-        System.out.println("The total number of zeros is :  " + (((this.arr.length*24*60) - deleted) - counter));
+        System.out.println("The total number of zeros is :  " + (((this.arr.length*1440) - deleted) - counter));
     }
 
     private void getIndexRemove(LinkedList<Integer> list, int s, int e) {
