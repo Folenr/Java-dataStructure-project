@@ -25,8 +25,10 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
             Scanner sc = new Scanner(fis);
             LocalDate date = LocalDate.parse(sc.nextLine(), formatter);
             int counter = 0;
-            while(sc.hasNextLine())
+            while(sc.hasNextLine()){
                 counter++;
+                sc.nextLine();
+            }
             this.arr = new LinkedList[counter];
             sc.close();
             sc = new Scanner(fis);
