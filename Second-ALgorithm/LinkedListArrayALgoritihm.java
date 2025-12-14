@@ -6,15 +6,13 @@ import java.io.*;
 public class LinkedListArrayALgoritihm extends SortingMethod{
 
     private int firstDay;
-    private final int lines;
     private LinkedList<Integer>[] arr;
     private int deleted = 0;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
     public LinkedListArrayALgoritihm(int lines){
-        this.lines = lines;
-        this.arr = new LinkedList[this.lines];
+        this.arr = new LinkedList[lines];
     }
 
     public void readFile() {
