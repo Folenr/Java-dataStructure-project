@@ -10,8 +10,8 @@ public class ArrayAlgoritihm extends SortingMethod{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public ArrayAlgoritihm(int lines){
-        this.days = new String[lines];
+    public ArrayAlgoritihm(){
+        this.days = new String[0];
     }
 
     public void readFile() {
@@ -21,6 +21,13 @@ public class ArrayAlgoritihm extends SortingMethod{
             Scanner sc = new Scanner(fis);
             LocalDate Date = LocalDate.parse(sc.nextLine(), formatter); //a temp date to turn the String into date
             int counter = 0;
+            while(sc.hasNextLine())
+                counter++;
+            this.days = new String[counter];
+            sc.close();
+            sc = new Scanner(fis);
+            sc.nextLine();//skip the date line
+            counter=0;
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();
                 this.days[counter] = toHexa(line); //add the result in it specific day
