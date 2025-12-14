@@ -17,30 +17,42 @@ public class FiveBitsAlgorithm extends SortingMethod{
     public void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
         try {
-            FileInputStream fis = new FileInputStream("input.txt");
-            Scanner sc = new Scanner(fis);
-            LocalDate Date = LocalDate.parse(sc.nextLine(), formatter); //a temp date to turn the String into date
+            File file = new File("input.txt");
+            if (!file.exists()) {
+                System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
+                return;
+            }
 
             int counter = 0;
-            while(sc.hasNextLine()){
-                counter++;
-                sc.nextLine();
+            try (Scanner lineCounter = new Scanner(file)) {
+                if (lineCounter.hasNextLine()) {
+                    lineCounter.nextLine(); // Skip date line
+                }
+                while(lineCounter.hasNextLine()){
+                    counter++;
+                    lineCounter.nextLine();
+                }
             }
+
             this.days = new String[counter];
-            sc.close();
-            fis = new FileInputStream("input.txt");
-            sc = new Scanner(fis);
-            sc.nextLine();//skip the date line
-            counter=0;
-            while(sc.hasNextLine()) {
-                String line = sc.nextLine(); //get the lines from first to last in file
-                this.days[counter] = to5Bits(line); //add the result in it specific day
-                counter++;
+
+            try (Scanner sc = new Scanner(file)) {
+                LocalDate Date = LocalDate.parse(sc.nextLine(), formatter);
+                this.firstDay = (int) Date.toEpochDay();
+
+                counter=0;
+                while(sc.hasNextLine()) {
+                    String line = sc.nextLine(); //get the lines from first to last in file
+                    this.days[counter] = to5Bits(line); //add the result in it specific day
+                    counter++;
+                }
+                System.out.println("Successfully loaded " + this.days.length + " days of data.");
+            }catch (FileNotFoundException e) {
+                System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
-            sc.close();
-            this.firstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
-        }catch (FileNotFoundException e) {
-            System.out.println("File not found");
+        }catch (Exception e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
