@@ -6,14 +6,12 @@ import java.time.*;
 
 public class ArrayAlgoritihm extends SortingMethod{
     private int firstDay;
-    private final int lines;
     private String[] days;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
     public ArrayAlgoritihm(int lines){
-        this.lines=lines;
-        this.days = new String[this.lines];
+        this.days = new String[lines];
     }
 
     public void readFile() {
