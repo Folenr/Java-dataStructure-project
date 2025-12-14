@@ -21,7 +21,7 @@ public class SixBitsAlgorithm extends SortingMethod{
             LocalDate Date = LocalDate.parse(sc.nextLine(), formatter); //a temp date to turn the String into date
             int counter = 0;
             while (sc.hasNextLine()) {
-                String line = sc.nextLine().replaceAll("\\s+", ""); //get the lines from first to last in file
+                String line = sc.nextLine(); //get the lines from first to last in file
                 this.days[counter] = to6Bits(line); //add the result in it specific day
                 counter++;
             }
