@@ -3,22 +3,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
 
-public class LinkedListArrayALgoritihm {
+public class LinkedListArrayALgoritihm extends SortingMethod{
 
-    private final int firstDay;
-    private final int line;
+    private int firstDay;
+    private final int lines;
     private LinkedList<Integer>[] arr;
     private int deleted = 0;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public LinkedListArrayALgoritihm(int line){
-        this.line = line;
-        this.arr = new LinkedList[this.line];
-        this.firstDay = readFile();
+    public LinkedListArrayALgoritihm(int lines){
+        this.lines = lines;
+        this.arr = new LinkedList[this.lines];
     }
 
-    private int readFile() {
+    public void readFile() {
         java.util.Locale.setDefault(Locale.US);
         for (int j = 0; j < arr.length; j++) {
             arr[j] = new LinkedList<>();
@@ -38,10 +37,9 @@ public class LinkedListArrayALgoritihm {
                 index++;
             }
             sc.close();
-            return (int) date.toEpochDay();
+            this.firstDay = (int) date.toEpochDay();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return 0;
         }
     }
 
