@@ -4,20 +4,19 @@ import java.util.*;
 import java.io.*;
 import java.time.*;
 
-public class ArrayAlgoritihm {
-    private final int firstDay;
-    private final int line;
+public class ArrayAlgoritihm extends SortingMethod{
+    private int firstDay;
+    private final int lines;
     private String[] days;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public ArrayAlgoritihm(int line){
-        this.line=line;
-        this.days = new String[this.line];
-        this.firstDay = readFile();
+    public ArrayAlgoritihm(int lines){
+        this.lines=lines;
+        this.days = new String[this.lines];
     }
 
-    private int readFile() {
+    public void readFile() {
         java.util.Locale.setDefault(java.util.Locale.US);
         try {
             FileInputStream fis = new FileInputStream("input.txt");
@@ -31,10 +30,9 @@ public class ArrayAlgoritihm {
                 counter++;
             }
             sc.close();
-            return (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
+            this.firstDay = (int)Date.toEpochDay(); //store the date as Integer : 19 10 2024 -> 20015
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return 0;
         }
     }
 
