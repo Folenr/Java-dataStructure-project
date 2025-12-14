@@ -31,6 +31,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
             }
             this.arr = new LinkedList[counter];
             sc.close();
+            fis = new FileInputStream("input.txt");
             sc = new Scanner(fis);
             sc.nextLine();//skip the date line
             counter=0;
