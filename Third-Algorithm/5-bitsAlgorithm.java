@@ -6,14 +6,12 @@ import java.math.BigInteger;
 
 public class FiveBitsAlgorithm extends SortingMethod{
     private int firstDay;
-    private final int lines;
     private String[] days;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
     public FiveBitsAlgorithm(int lines){
-        this.lines = lines;
-        this.days = new String[this.lines];
+        this.days = new String[lines];
     }
 
     public void readFile() {
@@ -118,8 +116,16 @@ public class FiveBitsAlgorithm extends SortingMethod{
 
     private String toBinary(int index) {
         StringBuilder binaryNum = new StringBuilder();
-        for (int i=0; i<this.days[index].length(); i++) {//convert all 5-bits char to binary and add all of them to binaryNum
-            binaryNum.append(String.format("%05d", Integer.parseInt(new BigInteger(String.valueOf(this.days[index].charAt(i)), 32).toString(2))));
+        String fiveBits = this.days[index];
+        for (int i=0; i<fiveBits.length(); i++) {//convert all 5-bits char to binary and add all of them to binaryNum
+            if(fiveBits.charAt(i) != '+')
+                binaryNum.append(String.format("%05d", Integer.parseInt(new BigInteger(String.valueOf(fiveBits.charAt(i)), 32).toString(2))));
+            else{
+                fiveBits = fiveBits.replaceAll("\\+", "");
+                for (int j=i; j<fiveBits.length(); j++)
+                    binaryNum.append(fiveBits.charAt(j));
+                break;
+            }
         }
         return binaryNum.toString();
     }
@@ -129,6 +135,11 @@ public class FiveBitsAlgorithm extends SortingMethod{
         StringBuilder result = new StringBuilder();
         for(int i=0; i+5<=edited.length(); i+=5) {
             result.append(Integer.toString(Integer.parseInt(edited.substring(i, i + 5), 2), 32).toUpperCase());
+        }
+        if(edited.length()%5 !=0) {
+            result.append("+");
+            for(int i=(edited.length()%5);i>0;i--)
+                result.append(edited.charAt(edited.length() - i));
         }
         return result.toString();
     }
