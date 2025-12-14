@@ -18,36 +18,49 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
     public void readFile() {
         java.util.Locale.setDefault(Locale.US);
         try {
-            FileInputStream fis = new FileInputStream("input.txt");
-            Scanner sc = new Scanner(fis);
-            LocalDate date = LocalDate.parse(sc.nextLine(), formatter);
-            int counter = 0;
-            while(sc.hasNextLine()){
-                counter++;
-                sc.nextLine();
+            File file = new File("input.txt");
+            if (!file.exists()) {
+                System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
+                return;
             }
+
+            int counter = 0;
+            try (Scanner lineCounter = new Scanner(file)) {
+                if (lineCounter.hasNextLine()) {
+                    lineCounter.nextLine(); // Skip date line
+                }
+                while(lineCounter.hasNextLine()){
+                    counter++;
+                    lineCounter.nextLine();
+                }
+            }
+
             this.arr = new LinkedList[counter];
+
             for (int j = 0; j < arr.length; j++) {
                 arr[j] = new LinkedList<>();
             }
-            sc.close();
-            fis = new FileInputStream("input.txt");
-            sc = new Scanner(fis);
-            sc.nextLine();//skip the date line
-            counter=0;
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                for (int i = 0; i < line.length(); i++) {
-                    if (line.charAt(i) == '1') {
-                        arr[counter].add(i + 1);
+
+            try (Scanner sc = new Scanner(file)) {
+                LocalDate Date = LocalDate.parse(sc.nextLine(), formatter);
+                this.firstDay = (int) Date.toEpochDay();
+                counter=0;
+                while (sc.hasNextLine()) {
+                    String line = sc.nextLine();
+                    for (int i = 0; i < line.length(); i++) {
+                        if (line.charAt(i) == '1') {
+                            arr[counter].add(i + 1);
+                        }
                     }
+                    counter++;
                 }
-                counter++;
+                System.out.println("Successfully loaded " + this.arr.length + " days of data.");
+            }catch (FileNotFoundException e) {
+                System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
-            sc.close();
-            this.firstDay = (int) date.toEpochDay();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+        } catch (Exception e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
