@@ -27,6 +27,7 @@ public class ArrayAlgoritihm extends SortingMethod{
             }
             this.days = new String[counter];
             sc.close();
+            fis = new FileInputStream("input.txt");
             sc = new Scanner(fis);
             sc.nextLine();//skip the date line
             counter=0;
