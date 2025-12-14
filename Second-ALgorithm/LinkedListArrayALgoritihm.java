@@ -17,9 +17,6 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
 
     public void readFile() {
         java.util.Locale.setDefault(Locale.US);
-        for (int j = 0; j < arr.length; j++) {
-            arr[j] = new LinkedList<>();
-        }
         try {
             FileInputStream fis = new FileInputStream("input.txt");
             Scanner sc = new Scanner(fis);
@@ -30,6 +27,9 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
                 sc.nextLine();
             }
             this.arr = new LinkedList[counter];
+            for (int j = 0; j < arr.length; j++) {
+                arr[j] = new LinkedList<>();
+            }
             sc.close();
             fis = new FileInputStream("input.txt");
             sc = new Scanner(fis);
@@ -147,6 +147,8 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
         }
         System.out.println("The total number of zeros is :  " + (((this.arr.length*1440) - deleted) - counter));
     }
+
+    public void save(){}
 
     private void getIndexRemove(LinkedList<Integer> list, int s, int e) {
         for (int i = 0; i < list.size(); i++) {
