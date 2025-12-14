@@ -26,7 +26,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
             LocalDate date = LocalDate.parse(sc.nextLine(), formatter);
             int index = 0;
             while (sc.hasNextLine()) {
-                String line = sc.nextLine().replaceAll("\\s+", "");
+                String line = sc.nextLine();
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == '1') {
                         arr[index].add(i + 1);
