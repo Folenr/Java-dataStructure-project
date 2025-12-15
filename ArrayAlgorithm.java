@@ -44,7 +44,9 @@ public class ArrayAlgorithm extends SortingMethod{
                     this.days[counter] = toHexa(line);
                     counter++;
                 }
+                System.out.println("File Size: " + file.length() + " Bytes.");
                 System.out.println("Successfully loaded " + this.days.length + " days of data.");
+                System.out.println("Compressed Size: "+ file.length()/4 + " Bytes.");
             }catch (FileNotFoundException e) {
                 System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
