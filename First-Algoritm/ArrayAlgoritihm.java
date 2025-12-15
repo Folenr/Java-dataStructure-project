@@ -80,6 +80,7 @@ public class ArrayAlgoritihm extends SortingMethod{
         String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
         //add the edited result to the array
         this.days[index] = toHexa(edited);
+        System.out.println("The Range Edited Successfully.");
     }
 
     public void delete(){
@@ -93,6 +94,7 @@ public class ArrayAlgoritihm extends SortingMethod{
         binaryNum = binaryNumB.toString();
 
         this.days[index] = toHexa(binaryNum);
+        System.out.println("The Range Deleted Successfully.");
     }
     public void displayDays(){
         System.out.println("The number of days is :  " + this.days.length);
