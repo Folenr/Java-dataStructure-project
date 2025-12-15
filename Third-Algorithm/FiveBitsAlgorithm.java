@@ -81,6 +81,7 @@ public class FiveBitsAlgorithm extends SortingMethod{
         String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
         //add the edited result to the array
         this.days[index] = to5Bits(edited);
+        System.out.println("The Range Edited Successfully.");
     }
 
     public void delete(){
@@ -90,6 +91,7 @@ public class FiveBitsAlgorithm extends SortingMethod{
         String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
         this.days[index] = to5Bits(edited);
+        System.out.println("The Range Deleted Successfully.");
     }
 
     public void displayDays(){
