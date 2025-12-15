@@ -44,7 +44,9 @@ public class SixBitsAlgorithm extends SortingMethod{
                     this.days[counter] = to6Bits(line); //add the result in it specific day
                     counter++;
                 }
+                System.out.println("File Size: " + file.length() + " Bytes.");
                 System.out.println("Successfully loaded " + this.days.length + " days of data.");
+                System.out.println("Compressed Size: "+ file.length()/6 + " Bytes.");
             }catch (FileNotFoundException e) {
                 System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
