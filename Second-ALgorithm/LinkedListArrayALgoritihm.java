@@ -161,7 +161,38 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
         System.out.println("The total number of zeros is :  " + (((this.arr.length*1440) - deleted) - counter));
     }
 
-    public void save(){}
+    public void save(){
+        try (FileWriter writer = new FileWriter("input.txt")) {
+            writer.write(LocalDate.ofEpochDay(firstDay).format(formatter)+"\n");
+            for (int day = 0; day < arr.length; day++) {
+                StringBuilder dayData = new StringBuilder();
+
+                // Initialize all minutes to '0'
+                for (int minute = 1; minute <= 1440; minute++) {
+                    dayData.append('0');
+                }
+
+                // Set '1' for minutes that exist in the linked list
+                LinkedList<Integer> list = arr[day];
+                for (Integer minute : list) {
+                    // Adjust index since minutes start from 1, but string index from 0
+                    if (minute >= 1 && minute <= 1440) {
+                        dayData.setCharAt(minute - 1, '1');
+                    }
+                }
+
+                writer.write(dayData.toString());
+
+                // Add newline except for the last day
+                if (day < arr.length - 1) {
+                    writer.write("\n");
+                }
+            }
+            System.out.println("All new Values are saved.");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void getIndexRemove(LinkedList<Integer> list, int s, int e) {
         for (int i = 0; i < list.size(); i++) {
