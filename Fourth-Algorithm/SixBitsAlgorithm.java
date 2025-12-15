@@ -78,6 +78,7 @@ public class SixBitsAlgorithm extends SortingMethod{
         String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + valString + binaryNum.substring(endMin + 1);
         this.days[index] = to6Bits(edited);
+        System.out.println("The Range Edited Successfully.");
     }
 
     public void delete() {
@@ -88,6 +89,7 @@ public class SixBitsAlgorithm extends SortingMethod{
         String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
         this.days[index] = to6Bits(edited);
+        System.out.println("The Range Deleted Successfully.");
     }
 
     public void displayDays(){
