@@ -123,6 +123,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
         }
 
         Collections.sort(list);
+        System.out.println("The Range Edited Successfully.");
     }
 
     public void delete() {
@@ -135,6 +136,7 @@ public class LinkedListArrayALgoritihm extends SortingMethod{
         LinkedList<Integer> list = arr[index];
         getIndexRemove(list, startMin, endMin);
         Collections.sort(list);
+        System.out.println("The Range Deleted Successfully.");
     }
 
     public void displayDays() {
