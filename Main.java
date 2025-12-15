@@ -19,7 +19,7 @@ public class Main {
             FileGenerator.newFile(lines,date);
         }
         SortingMethod[] sortingMethods = new SortingMethod[4];
-        sortingMethods[0] = new LinkedListArrayALgorithm();
+        sortingMethods[0] = new LinkedListArrayAlgorithm();
         sortingMethods[1] = new ArrayAlgorithm();
         sortingMethods[2] = new FiveBitsAlgorithm();
         sortingMethods[3] = new SixBitsAlgorithm();
