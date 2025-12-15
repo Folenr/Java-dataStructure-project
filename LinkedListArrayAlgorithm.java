@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
 
-public class LinkedListArrayALgorithm extends SortingMethod{
+public class LinkedListArrayAlgorithm extends SortingMethod{
 
     private int firstDay;
     private LinkedList[] arr;
