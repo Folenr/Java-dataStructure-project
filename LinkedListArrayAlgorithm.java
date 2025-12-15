@@ -54,6 +54,7 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
                     }
                     counter++;
                 }
+                System.out.println("File Size: " + file.length() + " Bytes.");
                 System.out.println("Successfully loaded " + this.arr.length + " days of data.");
             }catch (FileNotFoundException e) {
                 System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
