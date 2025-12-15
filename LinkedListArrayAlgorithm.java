@@ -11,7 +11,7 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     private static final Scanner scanner = new Scanner(System.in);
 
-    public LinkedListArrayALgoritihm(){
+    public LinkedListArrayAlgorithm(){
         this.arr = new LinkedList[0];
     }
 
