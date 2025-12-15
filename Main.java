@@ -5,7 +5,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to the java data structure project.");
         System.out.println("This project use distinct algorithms for storing data and read them.");
-        System.out.println("Students Developers : [Eng.Tareq AbuFarah,Eng.Iyas Alayyouby,Eng.Mahdi Abo-Obayd].\n");
+        System.out.println("Students Developers : [Eng.Tariq AbuFarah,Eng.Iyas Alayyouby,Eng.Mahdi Abo-Obaid].\n");
         System.out.println("1. use stored data.");
         System.out.println("2. create new random data.");
         System.out.print("\nChose your option: ");
