@@ -66,6 +66,10 @@ public class FiveBitsAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
         String binaryNum = toBinary(index);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
@@ -79,6 +83,10 @@ public class FiveBitsAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
         int[] values = new int[endMin-startMin + 1];
         System.out.print("Enter the values: ");
         StringBuilder valString = new StringBuilder();
@@ -102,6 +110,10 @@ public class FiveBitsAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
         String binaryNum = toBinary(index);
         String edited = binaryNum.substring(0,startMin) + binaryNum.substring(endMin + 1);
         this.days[index] = to5Bits(edited);
