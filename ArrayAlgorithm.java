@@ -65,6 +65,10 @@ public class ArrayAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
         String binaryNum = toBinary(this.days[index]);
         //take a substring and print it
         System.out.println(binaryNum.substring(startMin, endMin + 1));
@@ -78,6 +82,10 @@ public class ArrayAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
         int[] values = new int[endMin-startMin + 1];
         System.out.print("Enter the values: ");
         StringBuilder valString = new StringBuilder();
@@ -101,6 +109,10 @@ public class ArrayAlgorithm extends SortingMethod{
         }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
+        if(startMin < 0 || endMin > days.length) {
+            System.out.println("The Range is out of bounds.");
+            return;
+        }
 
         String binaryNum = toBinary(this.days[index]);
         StringBuilder binaryNumB = new StringBuilder(binaryNum);//this object make me able to delete a part of the string
