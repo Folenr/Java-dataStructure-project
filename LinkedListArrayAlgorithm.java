@@ -67,18 +67,14 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
 
     public void search() {
         int index = getIndex();
+        LinkedList<Integer> list = arr[index];
+        if (list.isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0];
         int endMin = range[1];
-
-        LinkedList<Integer> list = arr[index];
-
-        if (list.isEmpty()) {
-            for (int i = startMin; i <= endMin; i++)
-                System.out.print(0);
-            System.out.println();
-            return;
-        }
 
         int listIndex = 0;
         int element = list.getFirst();
@@ -104,6 +100,11 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
 
     public void edit() {
         int index = getIndex();
+        LinkedList<Integer> list = arr[index];
+        if (list.isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0];
         int endMin = range[1];
@@ -115,7 +116,6 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
             newValues[i] = Integer.parseInt(scanner.nextLine());
         }
 
-        LinkedList<Integer> list = arr[index];
         getIndexRemove(list, startMin, endMin);
 
         for (int i = 0; i < length; i++) {
@@ -129,12 +129,15 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
 
     public void delete() {
         int index = getIndex();
-
+        LinkedList<Integer> list = arr[index];
+        if (list.isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0];
         int endMin = range[1];
         deleted+=endMin - startMin;
-        LinkedList<Integer> list = arr[index];
         getIndexRemove(list, startMin, endMin);
         Collections.sort(list);
         System.out.println("The Range Deleted Successfully.");
