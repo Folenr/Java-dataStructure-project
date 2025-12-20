@@ -59,6 +59,10 @@ public class ArrayAlgorithm extends SortingMethod{
     //اذا شغال تصلحش
     public void search(){
         int index = getIndex();
+        if(this.days[index].isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
         String binaryNum = toBinary(this.days[index]);
@@ -68,6 +72,10 @@ public class ArrayAlgorithm extends SortingMethod{
 
     public void edit(){
         int index = getIndex();
+        if(this.days[index].isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
         int[] values = new int[endMin-startMin + 1];
@@ -87,6 +95,10 @@ public class ArrayAlgorithm extends SortingMethod{
 
     public void delete(){
         int index = getIndex();
+        if(this.days[index].isEmpty()) {
+            System.out.println("The Camera is broken in this day.");
+            return;
+        }
         int[] range = getRange();
         int startMin = range[0],endMin = range[1];
 
