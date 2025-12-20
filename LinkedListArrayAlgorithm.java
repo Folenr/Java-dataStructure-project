@@ -56,6 +56,9 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
                 }
                 System.out.println("File Size: " + file.length() + " Bytes.");
                 System.out.println("Successfully loaded " + this.arr.length + " days of data.");
+                File compressed = new File("compressed_data.txt");
+                saveCompressed();
+                System.out.println("Compressed Size: "+ compressed.length() + " Bytes.");
             }catch (FileNotFoundException e) {
                 System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
@@ -196,6 +199,19 @@ public class LinkedListArrayAlgorithm extends SortingMethod{
             }
             System.out.println("All new Values are saved.");
         }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveCompressed(){
+        try (FileWriter writer = new FileWriter("compressed_data.txt")) {
+            for(int i=0;i< arr.length;i++){
+                for(int j=0;j<arr[i].size();j++){
+                    writer.write(this.arr[i].get(j).toString());
+                }
+                writer.write("\n");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
