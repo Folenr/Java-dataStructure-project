@@ -46,7 +46,9 @@ public class SixBitsAlgorithm extends SortingMethod{
                 }
                 System.out.println("File Size: " + file.length() + " Bytes.");
                 System.out.println("Successfully loaded " + this.days.length + " days of data.");
-                System.out.println("Compressed Size: "+ file.length()/6 + " Bytes.");
+                File compressed = new File("compressed_data.txt");
+                saveCompressed();
+                System.out.println("Compressed Size: "+ compressed.length() + " Bytes.");
             }catch (FileNotFoundException e) {
                 System.out.println("File 'input.txt' not found. Please create data first (option 2 in main menu).");
             }
@@ -162,6 +164,16 @@ public class SixBitsAlgorithm extends SortingMethod{
 
             System.out.println("All new Values are saved.");
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveCompressed(){
+        try (FileWriter writer = new FileWriter("compressed_data.txt")) {
+            for(int i=0;i<days.length;i++){
+                writer.write(this.days[i]+"\n");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
